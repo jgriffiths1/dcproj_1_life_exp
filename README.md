@@ -1,6 +1,3 @@
-# dcproj_1_life_exp
-U.N. life expectancy data manipulation and visualization
-
 Hello,
 
 This is my first attempt at posting a project to GitHub.  I hope it goes well.  If anyone would like to give me some feedback it would be appriciated.
@@ -8,6 +5,8 @@ This is my first attempt at posting a project to GitHub.  I hope it goes well.  
 Thank you,
 John
 
+# dcproj_1_life_exp
+U.N. life expectancy data manipulation and visualization
 
 1. United Nations life expectancy data
 Life expectancy at birth is a measure of the average a living being is expected to live. It takes into account several demographic factors like gender, country, or year of birth.
