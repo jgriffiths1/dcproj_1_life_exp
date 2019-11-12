@@ -20,8 +20,11 @@ Let's create some plots to explore the inequalities about life expectancy at bir
 options(repr.plot.width = 6, repr.plot.height = 6)
 ​
 # Loading packages
+
 library(tidyr)
+
 library(dplyr)
+
 library(ggplot2)
 ​
 # Loading data
