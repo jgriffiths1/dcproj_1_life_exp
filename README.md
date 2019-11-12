@@ -20,32 +20,32 @@ options(repr.plot.width = 6, repr.plot.height = 6)
 ​
 # Loading packages
 
-library(tidyr)
+    library(tidyr)
 
-library(dplyr)
+    library(dplyr)
 
-library(ggplot2)
+    library(ggplot2)
 ​
 # Loading data
-life_expectancy <- read.csv("datasets/UNdata.csv")
+    life_expectancy <- read.csv("datasets/UNdata.csv")
 ​
 # Taking a look at the first few rows
-head(life_expectancy)
+    head(life_expectancy)
 
 2. Life expectancy of men vs. women by country
 Let's manipulate the data to make our exploration easier. We will build the dataset for our first plot in which we will represent the average life expectancy of men and women across countries for the last period recorded in our data (2000-2005).
 
 # Subsetting and reshaping the life expectancy data
-subdata <- life_expectancy  %>% 
+    subdata <- life_expectancy  %>% 
     
-    filter(Year == "2000-2005")%>%
+        filter(Year == "2000-2005")%>%
     
-    select(Country.or.Area, Subgroup, Value)%>%
+        select(Country.or.Area, Subgroup, Value)%>%
     
-    spread(Subgroup, Value)
+        spread(Subgroup, Value)
 ​
 # Taking a look at the first few rows
-head(subdata)
+    head(subdata)
 
 3. Visualize I
 A scatter plot is a useful way to visualize the relationship between two variables. It is a simple plot in which points are arranged on two axes, each of which represents one of those variables.
@@ -53,9 +53,9 @@ A scatter plot is a useful way to visualize the relationship between two variabl
 Let's create a scatter plot using ggplot2 to represent life expectancy of males (on the x-axis) against females (on the y-axis). We will create a straightforward plot in this task, without many details. We will take care of these kinds of things shortly.
 
 # Plotting male and female life expectancy
-ggplot(subdata, aes(x = Male, y= Female))+
+    ggplot(subdata, aes(x = Male, y= Female))+
     
-    geom_point()
+        geom_point()
 
 4. Reference lines I
 A good plot must be easy to understand. There are many tools in ggplot2 to achieve this goal and we will explore some of them now. Starting from the previous plot, let's set the same limits for both axes as well as place a diagonal line for reference. After doing this, the difference between men and women across countries will be easier to interpret.
@@ -63,27 +63,27 @@ A good plot must be easy to understand. There are many tools in ggplot2 to achie
 After completing this task, we will see how most of the points are arranged above the diagonal and how there is a significant dispersion among them. What does this all mean?
 
 # Adding an abline and changing the scale of axes of the previous plots
-ggplot(subdata, aes(x = Male, y = Female))+
-    geom_point()+
-    geom_abline(intercept = 0, slope = 1, linetype = 2)+
-    scale_x_continuous(lim = c(35, 85))+
-    scale_y_continuous(lim = c(35, 85))
+    ggplot(subdata, aes(x = Male, y = Female))+
+        geom_point()+
+        geom_abline(intercept = 0, slope = 1, linetype = 2)+
+        scale_x_continuous(lim = c(35, 85))+
+        scale_y_continuous(lim = c(35, 85))
 
 5. Plot titles and axis labels
 A key point to make a plot understandable is placing clear labels on it. Let's add titles, axis labels, and a caption to refer to the source of data. Let's also change the appearance to make it clearer.
 
 # Adding labels to previous plot
-ggplot(subdata, aes(x=Male, y=Female))+
+    ggplot(subdata, aes(x=Male, y=Female))+
   
-  geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
+    geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
   
-  geom_abline(intercept = 0, slope = 1, linetype=2)+
+    geom_abline(intercept = 0, slope = 1, linetype=2)+
   
-  scale_x_continuous(limits=c(35,85))+
+    scale_x_continuous(limits=c(35,85))+
   
-  scale_y_continuous(limits=c(35,85))+
+    scale_y_continuous(limits=c(35,85))+
   
-  labs(title="Life Expectancy at Birth by Country",
+    labs(title="Life Expectancy at Birth by Country",
        
        subtitle="Years. Period: 2000-2005. Average.",
        
@@ -97,22 +97,22 @@ ggplot(subdata, aes(x=Male, y=Female))+
 Now, we will label some points of our plot with the name of its corresponding country. We want to draw attention to some special countries where the gap in life expectancy between men and women is significantly high. These will be the final touches on this first plot.
 
 # Subseting data to obtain countries of interest
-top_male <- subdata %>% arrange(Male-Female) %>% head(3)
+    top_male <- subdata %>% arrange(Male-Female) %>% head(3)
 
-top_female <- subdata %>% arrange(Female-Male) %>% head(3)
+    top_female <- subdata %>% arrange(Female-Male) %>% head(3)
 ​
 # Adding text to the previous plot to label countries of interest
-ggplot(subdata, aes(x=Male, y=Female, label = Country.or.Area))+
+    ggplot(subdata, aes(x=Male, y=Female, label = Country.or.Area))+
   
-  geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
+    geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
   
-  geom_abline(intercept = 0, slope = 1, linetype=2)+
+    geom_abline(intercept = 0, slope = 1, linetype=2)+
   
-  scale_x_continuous(limits=c(35,85))+
+    scale_x_continuous(limits=c(35,85))+
   
-  scale_y_continuous(limits=c(35,85))+
+    scale_y_continuous(limits=c(35,85))+
   
-  labs(title="Life Expectancy at Birth by Country",
+    labs(title="Life Expectancy at Birth by Country",
        
        subtitle="Years. Period: 2000-2005. Average.",
        
@@ -122,11 +122,11 @@ ggplot(subdata, aes(x=Male, y=Female, label = Country.or.Area))+
        
        y="Females")+
  
- geom_text(data = top_male, size =3)+
+    geom_text(data = top_male, size =3)+
   
-  geom_text(data = top_female, size = 3)+
+    geom_text(data = top_female, size = 3)+
   
-  theme_bw()
+    theme_bw()
 ​
 
 7. How has life expectancy by gender evolved?
@@ -135,116 +135,116 @@ Since our data contains historical information, let's see now how life expectanc
 Let's start building a dataset called subdata2 for our second plot.
 
 # Subsetting, mutating and reshaping the life expectancy data
-subdata2 <- life_expectancy %>% 
+    subdata2 <- life_expectancy %>% 
   
-  filter(Year %in% c("1985-1990", "2000-2005")) %>% 
+        filter(Year %in% c("1985-1990", "2000-2005")) %>% 
   
-  mutate(Sub_Year=paste(Subgroup, Year, sep="_")) %>% 
+        mutate(Sub_Year=paste(Subgroup, Year, sep="_")) %>% 
   
-  mutate(Sub_Year=gsub("-", "_", Sub_Year)) %>% 
+        mutate(Sub_Year=gsub("-", "_", Sub_Year)) %>% 
   
-  select(-Subgroup, -Year) %>% 
+        select(-Subgroup, -Year) %>% 
   
-  spread(Sub_Year, Value)%>%
+        spread(Sub_Year, Value)%>%
   
-  mutate(diff_Female = (Female_2000_2005 - Female_1985_1990))%>%
+        mutate(diff_Female = (Female_2000_2005 - Female_1985_1990))%>%
   
-  mutate(diff_Male = (Male_2000_2005 - Male_1985_1990))
+        mutate(diff_Male = (Male_2000_2005 - Male_1985_1990))
 ​
 # Taking a look at the first few rows
-head(subdata2)
+    head(subdata2)
 
 8. Visualize II
 Now let's create our second plot in which we will represent average life expectancy differences between "1985-1990" and "2000-2005" for men and women.
 
 # Doing a nice first version of the plot with abline, scaling axis and adding labels
-ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area))+
+    ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area))+
   
-  geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
+        geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
   
-  geom_abline(intercept = 0, slope = 1, linetype=2)+
+        geom_abline(intercept = 0, slope = 1, linetype=2)+
   
-  scale_x_continuous(limits = c(-25, 25))+
+        scale_x_continuous(limits = c(-25, 25))+
   
-  scale_y_continuous(limits = c(-25,25))+
+        scale_y_continuous(limits = c(-25,25))+
   
-  labs(title="Life Expectancy at Birth by Country in Years",
+        labs(title="Life Expectancy at Birth by Country in Years",
   
-       subtitle="Difference between 1985-1990 and 2000-2005. Average.",
+            subtitle="Difference between 1985-1990 and 2000-2005. Average.",
        
-       caption="Source: United Nations Statistics Division",
+            caption="Source: United Nations Statistics Division",
        
-       x="Males",
+            x="Males",
        
-       y="Females")+
+            y="Females")+
 
-theme_bw()
+        theme_bw()
 
 9. Reference lines II
 Adding reference lines can make plots easier to understand. We already added a diagonal line to visualize differences between men and women more clearly. Now we will add two more lines to help to identify in which countries people increased or decreased their life expectancy in the period analyzed.
 
 # Adding an hline and vline to previous plots
-ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area))+
+    ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area))+
   
-  geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
+        geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
   
-  geom_abline(intercept = 0, slope = 1, linetype=2)+
+        geom_abline(intercept = 0, slope = 1, linetype=2)+
   
-  scale_x_continuous(limits=c(-25,25))+
+        scale_x_continuous(limits=c(-25,25))+
   
-  scale_y_continuous(limits=c(-25,25))+
+        scale_y_continuous(limits=c(-25,25))+
   
-  geom_hline(yintercept = 0, linetype = 2)+
+        geom_hline(yintercept = 0, linetype = 2)+
   
-  geom_vline(xintercept = 0, linetype = 2)+
+        geom_vline(xintercept = 0, linetype = 2)+
   
-  labs(title="Life Expectancy at Birth by Country",
+        labs(title="Life Expectancy at Birth by Country",
        
-       subtitle="Years. Difference between 1985-1990 and 2000-2005. Average.",
+            subtitle="Years. Difference between 1985-1990 and 2000-2005. Average.",
        
-       caption="Source: United Nations Statistics Division",
+            caption="Source: United Nations Statistics Division",
        
-       x="Males",
+            x="Males",
        
-       y="Females")+
+            y="Females")+
 
-theme_bw()
+        theme_bw()
 
 10. Highlighting remarkable countries II
 As we did in the first plot, let's label some points. Concretely, we will point those three where the aggregated average life expectancy for men and women increased most and those three where decreased most in the period.
 
 # Subseting data to obtain countries of interest
-top <- subdata2 %>% arrange(diff_Male+diff_Female) %>% head(3)
+    top <- subdata2 %>% arrange(diff_Male+diff_Female) %>% head(3)
 
-bottom <- subdata2 %>% arrange(-(diff_Male+diff_Female)) %>% tail(3)
+    bottom <- subdata2 %>% arrange(-(diff_Male+diff_Female)) %>% tail(3)
 ​
 # Adding text to the previous plot to label countries of interest
-ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area), guide=FALSE)+
+    ggplot(subdata2, aes(x=diff_Male, y=diff_Female, label=Country.or.Area), guide=FALSE)+
   
-  geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
+        geom_point(colour="white", fill="chartreuse3", shape=21, alpha=.55, size=5)+
   
-  geom_abline(intercept = 0, slope = 1, linetype=2)+
+        geom_abline(intercept = 0, slope = 1, linetype=2)+
   
-  scale_x_continuous(limits=c(-25,25))+
+        scale_x_continuous(limits=c(-25,25))+
   
-  scale_y_continuous(limits=c(-25,25))+
+        scale_y_continuous(limits=c(-25,25))+
   
-  geom_hline(yintercept=0, linetype=2)+
+        geom_hline(yintercept=0, linetype=2)+
   
-  geom_vline(xintercept=0, linetype=2)+
+        geom_vline(xintercept=0, linetype=2)+
   
-  labs(title="Life Expectancy at Birth by Country",
+        labs(title="Life Expectancy at Birth by Country",
        
-       subtitle="Years. Difference between 1985-1990 and 2000-2005. Average.",
+            subtitle="Years. Difference between 1985-1990 and 2000-2005. Average.",
        
-       caption="Source: United Nations Statistics Division",
+            caption="Source: United Nations Statistics Division",
        
-       x="Males",
+            x="Males",
        
-       y="Females")+
+            y="Females")+
   
-  geom_text(data = top, size = 3)+
+        geom_text(data = top, size = 3)+
   
-  geom_text(data = bottom, size = 3)+
+        geom_text(data = bottom, size = 3)+
   
-  theme_bw()
+        theme_bw()
